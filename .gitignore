@@ -1,0 +1,36 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+*.secrets.json
+
+# Build artifacts
+dist/
+build/
+coverage/
+htmlcov/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Test / lint cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Private credentials
+privatecredentials/*
+!privatecredentials/.gitkeep

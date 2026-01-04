@@ -1,0 +1,1 @@
+#Pydantic BaseSettings 기반으로 .env/환경변수에서 모든 설정을 읽어오는 중앙 설정 객체
