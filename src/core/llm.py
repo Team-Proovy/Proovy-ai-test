@@ -74,7 +74,14 @@ def get_model(model_name: AllModelEnum, /) -> ModelT:
         raise ValueError(f"Unsupported model: {model_name}")
 
     if model_name in OpenAIModelName:
-        return ChatOpenAI(model=api_model_name, streaming=True)
+        # OPENAI_API_KEY는 Settings에서 SecretStr로 관리되므로 여기서 직접 전달해준다.
+        if not settings.OPENAI_API_KEY:
+            raise ValueError("OPENAI_API_KEY must be set to use OpenAI models")
+        return ChatOpenAI(
+            model=api_model_name,
+            streaming=True,
+            api_key=settings.OPENAI_API_KEY.get_secret_value(),
+        )
     if model_name in OpenAICompatibleName:
         if not settings.COMPATIBLE_BASE_URL or not settings.COMPATIBLE_MODEL:
             raise ValueError("OpenAICompatible base url and endpoint must be configured")

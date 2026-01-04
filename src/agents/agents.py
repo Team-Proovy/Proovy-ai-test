@@ -7,7 +7,7 @@ from langgraph.pregel import Pregel
 from agents.chatbot import chatbot
 from schema import AgentInfo
 
-DEFAULT_AGENT = "research-assistant"
+DEFAULT_AGENT = "chatbot"
 
 # Type alias to handle LangGraph's different agent patterns
 # - @entrypoint functions return Pregel
