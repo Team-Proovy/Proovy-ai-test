@@ -1,14 +1,14 @@
-#HTTP API 입·출력에 쓰이는 핵심 데이터 구조(Pydantic 모델)들을 정의
+# HTTP API 입·출력에 쓰이는 핵심 데이터 구조(Pydantic 모델)들을 정의한다.
 from typing import Any, Literal, NotRequired
 
 from pydantic import BaseModel, Field, SerializeAsAny
 from typing_extensions import TypedDict
 
-from schema.models import AllModelEnum, AnthropicModelName, OpenAIModelName
+from schema.models import AllModelEnum, OpenAIModelName
 
 
 class AgentInfo(BaseModel):
-    """Info about an available agent."""
+    """사용 가능한 에이전트에 대한 정보."""
 
     key: str = Field(
         description="Agent key.",
@@ -21,7 +21,7 @@ class AgentInfo(BaseModel):
 
 
 class ServiceMetadata(BaseModel):
-    """Metadata about the service including available agents and models."""
+    """사용 가능한 에이전트와 모델 정보를 포함한 서비스 메타데이터."""
 
     agents: list[AgentInfo] = Field(
         description="List of available agents.",
@@ -39,7 +39,7 @@ class ServiceMetadata(BaseModel):
 
 
 class UserInput(BaseModel):
-    """Basic user input for the agent."""
+    """에이전트에 전달되는 기본 사용자 입력."""
 
     message: str = Field(
         description="User input to the agent.",
@@ -49,7 +49,7 @@ class UserInput(BaseModel):
         title="Model",
         description="LLM Model to use for the agent. Defaults to the default model set in the settings of the service.",
         default=None,
-        examples=[OpenAIModelName.GPT_5_NANO, AnthropicModelName.HAIKU_45],
+        examples=[OpenAIModelName.GPT_5_NANO],
     )
     thread_id: str | None = Field(
         description="Thread ID to persist and continue a multi-turn conversation.",
@@ -69,7 +69,7 @@ class UserInput(BaseModel):
 
 
 class StreamInput(UserInput):
-    """User input for streaming the agent's response."""
+    """에이전트 응답을 스트리밍할 때 사용하는 입력."""
 
     stream_tokens: bool = Field(
         description="Whether to stream LLM tokens to the client.",
@@ -78,7 +78,7 @@ class StreamInput(UserInput):
 
 
 class ToolCall(TypedDict):
-    """Represents a request to call a tool."""
+    """툴 호출 요청을 표현하는 구조."""
 
     name: str
     """The name of the tool to be called."""
@@ -90,7 +90,7 @@ class ToolCall(TypedDict):
 
 
 class ChatMessage(BaseModel):
-    """Message in a chat."""
+    """채팅 내의 단일 메시지를 표현하는 모델."""
 
     type: Literal["human", "ai", "tool", "custom"] = Field(
         description="Role of the message.",
@@ -119,12 +119,12 @@ class ChatMessage(BaseModel):
         default={},
     )
     custom_data: dict[str, Any] = Field(
-        description="Custom message data.",
+        description="사용자 정의 메시지 데이터.",
         default={},
     )
 
     def pretty_repr(self) -> str:
-        """Get a pretty representation of the message."""
+        """메시지를 사람이 읽기 좋은 형태의 문자열로 변환한다."""
         base_title = self.type.title() + " Message"
         padded = " " + base_title + " "
         sep_len = (80 - len(padded)) // 2
@@ -138,7 +138,7 @@ class ChatMessage(BaseModel):
 
 
 class Feedback(BaseModel):  # type: ignore[no-redef]
-    """Feedback for a run, to record to LangSmith."""
+    """실행(run)에 대한 피드백으로, LangSmith 에 기록하기 위한 모델."""
 
     run_id: str = Field(
         description="Run ID to record feedback for.",
@@ -164,7 +164,7 @@ class FeedbackResponse(BaseModel):
 
 
 class ChatHistoryInput(BaseModel):
-    """Input for retrieving chat history."""
+    """채팅 기록을 조회하기 위한 입력."""
 
     thread_id: str = Field(
         description="Thread ID to persist and continue a multi-turn conversation.",
