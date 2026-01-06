@@ -14,6 +14,9 @@ build/
 coverage/
 htmlcov/
 
+# Packaging metadata
+src/proovy_ai.egg-info/
+
 # Python cache
 __pycache__/
 *.pyc
