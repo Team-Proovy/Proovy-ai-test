@@ -1,9 +1,27 @@
-### 실행 메뉴얼
+# Proovy API
 
-- 저는 visual studio code 를 사용하고 잇습니다
-- python 3.11 버전으로 해야 안깨집니다
-- ctrl + shift + p → `python : select interpreter` 에서 3.11 로 쓰기
-1. `git clone` -> 프로젝트 폴더 넣어놓을 폴더에서 git 명령어 실행!
-2. `루트에 .env 파일 만들기`-> 노션의 정보보호에 명시!
-3. `uv sync` -> terminal에서 실행
-4. `py -m uv run .\src\run_service.py` -> terminal에서 실행
+이공계 대학생을 위한 AI 튜터 서비스 에이전트
+
+## 기술 스택
+
+- Python 3.11
+- FastAPI
+- LangGraph / LangChain
+- Uvicorn
+- ChromaDB
+
+## 브랜치 전략
+
+- `main`: 프로덕션 배포
+- `dev`: 개발 통합
+- `feat/{이슈번호}`: 기능 개발
+- `fix/{이슈번호}`: 버그 수정
+
+## 커밋 컨벤션
+```
+feat: 기능 추가
+fix: 버그 수정
+refactor: 리팩토링
+docs: 문서 수정
+chore: 설정 변경
+```
